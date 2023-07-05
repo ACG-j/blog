@@ -1,0 +1,64 @@
+name: Hexo博客持续集成
+
+on: 
+  push:
+    branches:
+      - master
+      
+jobs:
+  build: 
+    runs-on: ubuntu-latest 
+
+    steps:
+    - name: 检出仓库代码
+      uses: actions/checkout@master
+
+    - name: 安装Node.js
+      uses: actions/setup-node@master
+      with:
+        node-version: "latest"
+
+    - name: 安装Hexo依赖
+      run: |
+        npm install hexo-cli -g
+        npm install
+
+    - name: 构建Hexo
+      run: |
+        hexo clean
+        hexo generate
+        
+    - name: 部署到云服务器
+      uses: easingthemes/ssh-deploy@main
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+        ARGS: "-avzr --delete"
+        SOURCE: "./public/"
+        REMOTE_HOST: ${{ secrets.SERVER_HOST }}
+        REMOTE_USER: ${{ secrets.SERVER_USER }}
+        TARGET: "/www/wwwroot/blog.ctftools.com/"
+      
+    - name: 打包压缩
+      run: tar -zcvf release.tgz public
+
+    - name: 发布 Release
+      id: create_release
+      uses: actions/create-release@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} #这个令牌是Actions提供的，你不需要创建自己的令牌
+      with:
+        tag_name: ${{ github.run_id }}
+        release_name: Release ${{ github.run_id }}
+        draft: false
+        prerelease: false
+
+    - name: 上传构建结果到 Release
+      id: upload-release-asset
+      uses: actions/upload-release-asset@master
+      env:
+       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./release.tgz
+        asset_name: release.tgz
+        asset_content_type: application/x-tgz
