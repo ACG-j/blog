@@ -36,7 +36,7 @@ jobs:
         SOURCE: "./public/"
         REMOTE_HOST: ${{ secrets.SERVER_HOST }}
         REMOTE_USER: ${{ secrets.SERVER_USER }}
-        TARGET: "/www/wwwroot/blog.ctftools.com/"
+        TARGET: "/docker-data/NginxProxyManager/data/static"
       
     - name: 打包压缩
       run: tar -zcvf release.tgz public
