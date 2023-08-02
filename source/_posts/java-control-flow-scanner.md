@@ -2,9 +2,9 @@
 title: Java 学习：Scanner
 date: 2023-08-02 15:13:02
 tags:
-  - java
+- Control flow
 categories:
-  - code
+- Java
 ---
 
 ## Scanner 对象
