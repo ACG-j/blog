@@ -1,0 +1,35 @@
+---
+title: java_control_flow_scanner
+date: 2023-08-02 15:13:02
+tags:
+  - java
+categories:
+  - code
+---
+
+## Scanner 对象
+
+* 功能：
+
+  获取用户输入
+
+* 基本语法
+
+  ```java
+  Scanner s = new Scanner(System.in);
+  ```
+
+* next() :
+  * 1、一定要读取有效字符后才可以结束输入
+  * 2、对输入有效字符之前遇到的空白，next()方法会自动将其去掉
+  * 3、只有输入有效字符后才将后面输入的空白作为分隔符或者结束符
+  * 4、<font color=red>next() 不能得到带有空格的字符串</font> 
+* nextLine() :
+  * 1、以Enter为结束符，也就是说nextLine()方法返回的是输入回车之前的所有字符
+  * 2、可以获得空白
+
+
+
+#### 笔记
+
+​	https://git.sgxi.cn/ation_ciger/java_learn/src/branch/master/src/cn/sgxi/Scanner
