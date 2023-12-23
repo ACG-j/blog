@@ -36,4 +36,4 @@ jobs:
         SOURCE: "./public/"
         REMOTE_HOST: ${{ secrets.SERVER_HOST }}
         REMOTE_USER: ${{ secrets.SERVER_USER }}
-        TARGET: "/docker-data/NginxProxyManager/data/static"
+        TARGET: "/opt/1panel/apps/openresty/openresty/www/sites/blog.sgxi.cn"
